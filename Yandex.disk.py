@@ -1,8 +1,9 @@
 import requests
 
+import os
+
 class YaUploader:
-    # base_host = 'https://cloud-api.yandex.net:443/'
-    base_host = 'https://cloud-api.yandex.net/'
+    base_host = 'https://cloud-api.yandex.net:443/'
 
     def __init__(self, token: str):
         self.token = token
@@ -18,7 +19,6 @@ class YaUploader:
         request_uri = self.base_host + uri
         params = {'path': path, 'overwrite': True}
         response = requests.get(request_uri, headers=self.get_headers(), params=params)
-        print(response.json())
         return response.json()['href']
 
     def upload(self, local_path, file_path: str):
@@ -30,8 +30,7 @@ class YaUploader:
 
 if __name__ == '__main__':
     # Получить путь к загружаемому файлу и токен от пользователя
-    path_to_file = 't2.jpg'
-    token = 'y0_AgAAAAAFm3q_AADLWwAAAADUOsbp0lkJ6SxXQZ2CjaM-Ph2t1xcJiwM'
+    path_to_file = os.path.join(os.getcwd(), 'test.jpg')
+    token = ''
     uploader = YaUploader(token)
-    result = uploader.upload(path_to_file, '/t2.jpg')
-    # result = uploader.upload(path_to_file, '/t2.jpg')
+    result = uploader.upload(path_to_file, 'test.jpg')
